@@ -103,12 +103,12 @@ pipeline {
                         case "rollback":
                             bat "C:\\jenkins-pipeline-sample\\tools\\rollback.bat"
                             bat "rmdir /s /q C:\\jenkins-pipeline-sample\\tmp"
-                            print "ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã—ã¾ã—ãŸã€‚"
+                            print "ƒ[ƒ‹ƒoƒbƒN‚µ‚Ü‚µ‚½B"
                         break
                         case "complete":
                             bat "C:\\jenkins-pipeline-sample\\tools\\complete.bat"
                             bat "rmdir /s /q C:\\jenkins-pipeline-sample\\tmp"
-                            print "ã‚³ãƒ³ãƒ—ãƒªãƒ¼ãƒˆã—ã¾ã—ãŸã€‚"
+                            print "ƒRƒ“ƒvƒŠ[ƒg‚µ‚Ü‚µ‚½B"
                         break
                     }
                 }
