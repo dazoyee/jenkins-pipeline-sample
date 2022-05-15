@@ -3,7 +3,7 @@
 :::::
 
 :: İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
-for /f "usebackq tokens=1,* delims==" %%a in ("..\bin\env") do (
+for /f "usebackq tokens=1,* delims==" %%a in (""C:\jenkins-pipeline-sample\bin\env"") do (
     set %%a=%%b
 )
 

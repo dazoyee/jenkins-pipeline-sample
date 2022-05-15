@@ -23,16 +23,6 @@ if not exist "%APP_HOME%\tmp\now" (
   exit 1
 )
 
-::::: サービス停止 start
-
-sc.exe stop %APP_NAME%
-ping -n 5 localhost > nul
-sc.exe query %APP_NAME% | findstr STATE | findstr STOPPED
-if not %errorlevel% equ 0 (
-  echo *****サービス停止に失敗しました。*****
-  exit 1
-)
-::::: サービス停止 end
 ::::: アプリバージョンの取得 start
 
 if exist "%APP_HOME%\tmp" (
@@ -41,7 +31,7 @@ if exist "%APP_HOME%\tmp" (
   set JAR_NAME=%%~nf
   call :get_ver & set LATEST_VERSION=!ver!
   )
-  for %%f in ("%APP_HOME%\bin\%APP_NAME%-*.jar") do (
+  for %%f in ("%APP_HOME%\tmp\now\%APP_NAME%-*.jar") do (
   set JAR_NAME=%%~nf
   call :get_ver & set NOW_VERSION=!ver!
   )
@@ -57,40 +47,11 @@ if %LATEST_VERSION% == %NOW_VERSION% (
 )
 
 ::::: アプリバージョンの取得 end
-::::: アプリバージョンの書き換え start
+::::: JARの後片付け start
 
-set ENV=%APP_HOME%\bin\env
+copy "%APP_HOME%\tmp\now\%APP_NAME%-%NOW_VERSION%.jar" "%APP_HOME%\bin\bk"
 
-ren %ENV% env.tmp
-for /f "delims=" %%e in (%ENV%.tmp) do (
-  set line=%%e
-  set target=!line:~0,11!
-  if !target! == APP_VERSION (
-    echo APP_VERSION=%LATEST_VERSION%>>%ENV%
-  ) else (
-    echo !line!>>%ENV%
-  )
-)
-del %ENV%.tmp
-
-::::: アプリバージョンの書き換え end
-::::: JARの差し替え start
-
-copy "%APP_HOME%\tmp\latest\%APP_NAME%-%LATEST_VERSION%.jar" "%APP_HOME%\bin"
-move "%APP_HOME%\bin\%APP_NAME%-%NOW_VERSION%.jar" "%APP_HOME%\tmp\now"
-
-::::: JARの差し替え end
-::::: サービス起動 start
-
-sc.exe start %APP_NAME%
-ping -n 10 localhost > nul
-sc.exe query %APP_NAME% | findstr STATE | findstr RUNNING
-if not %errorlevel% equ 0 (
-  echo *****サービス起動に失敗しました。*****
-  exit 1
-)
-
-::::: サービス起動 end
+::::: JARの後片付け end
 
 exit /b
 

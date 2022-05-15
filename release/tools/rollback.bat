@@ -41,7 +41,7 @@ if exist "%APP_HOME%\tmp" (
   set JAR_NAME=%%~nf
   call :get_ver & set LATEST_VERSION=!ver!
   )
-  for %%f in ("%APP_HOME%\bin\%APP_NAME%-*.jar") do (
+  for %%f in ("%APP_HOME%\tmp\now\%APP_NAME%-*.jar") do (
   set JAR_NAME=%%~nf
   call :get_ver & set NOW_VERSION=!ver!
   )
@@ -66,7 +66,7 @@ for /f "delims=" %%e in (%ENV%.tmp) do (
   set line=%%e
   set target=!line:~0,11!
   if !target! == APP_VERSION (
-    echo APP_VERSION=%LATEST_VERSION%>>%ENV%
+    echo APP_VERSION=%NOW_VERSION%>>%ENV%
   ) else (
     echo !line!>>%ENV%
   )
@@ -76,8 +76,8 @@ del %ENV%.tmp
 ::::: アプリバージョンの書き換え end
 ::::: JARの差し替え start
 
-copy "%APP_HOME%\tmp\latest\%APP_NAME%-%LATEST_VERSION%.jar" "%APP_HOME%\bin"
-move "%APP_HOME%\bin\%APP_NAME%-%NOW_VERSION%.jar" "%APP_HOME%\tmp\now"
+copy "%APP_HOME%\tmp\now\%APP_NAME%-%NOW_VERSION%.jar" "%APP_HOME%\bin"
+del "%APP_HOME%\bin\%APP_NAME%-%LATEST_VERSION%.jar"
 
 ::::: JARの差し替え end
 ::::: サービス起動 start
