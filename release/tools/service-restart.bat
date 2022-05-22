@@ -11,5 +11,11 @@ if not %INPUT% == Y (
   exit 0
 )
 
-:: サービス停止
+:: サービス再起動
 sc.exe stop jenkins-pipeline-sample
+:DoWhile
+  sc.exe query jenkins-pipeline-sample | findstr STATE | findstr STOPPED
+  if %errorlevel% equ 0 goto DoWhileExit
+goto DoWhile
+:DoWhileExit
+sc.exe start jenkins-pipeline-sample

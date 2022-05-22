@@ -1,3 +1,29 @@
 spring:
   profiles:
     active: dev
+
+management:
+  info:
+    git:
+      enabled: true
+      mode: full
+    env.enabled: true
+    build.enabled: true
+    java.enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  application:
+    groupId: '@project.groupId@'
+    artifactId: '@project.artifactId@'
+    version: '@project.version@'
+    name: '@project.name@'
+    spring-boot-version: '@project.parent.version@'
