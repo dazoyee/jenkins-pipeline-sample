@@ -12,7 +12,7 @@
 
     <groupId>com.github.ioridazo</groupId>
     <artifactId>jenkins-pipeline-sample</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>jenkins-pipeline-sample</name>
 
     <properties>

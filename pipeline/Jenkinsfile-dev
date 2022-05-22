@@ -18,19 +18,19 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                print "===== ƒ`ƒFƒbƒNƒAƒEƒg‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
                 // git url: 'https://github.com/ioridazo/jenkins-pipeline-sample.git', branch: 'develop'
                 checkout scm
-                print "===== ƒ`ƒFƒbƒNƒAƒEƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Test') {
             steps {
-                print "===== ƒeƒXƒg‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ†ã‚¹ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
                 bat "./mvnw clean clover:setup"
                 bat "./mvnw test surefire-report:report pmd:pmd pmd:cpd jacoco:report spotbugs:spotbugs clover:aggregate clover:clover"
-                print "===== ƒeƒXƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ†ã‚¹ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
@@ -75,16 +75,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                print "===== ƒrƒ‹ƒh‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ“ãƒ«ãƒ‰ã‚’é–‹å§‹ã—ã¾ã™ ====="
                 bat "./mvnw package -DskipTests=true"
                 archiveArtifacts artifacts: 'target/*.jar,target/*.zip', followSymlinks: false
-                print "===== ƒrƒ‹ƒh‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ“ãƒ«ãƒ‰ã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Upload') {
             steps {
-                print "===== ƒrƒ‹ƒh¬‰Ê•¨‚ğNexus‚ÉƒAƒbƒvƒ[ƒh‚µ‚Ü‚· ====="
+                print "===== ãƒ“ãƒ«ãƒ‰æˆæœç‰©ã‚’Nexusã«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader (
@@ -104,13 +104,13 @@ pipeline {
                         ]
                     )
                 }
-                print "===== ƒrƒ‹ƒh¬‰Ê•¨‚ğ³í‚ÉƒAƒbƒvƒ[ƒh‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ“ãƒ«ãƒ‰æˆæœç‰©ã‚’æ­£å¸¸ã«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Download') {
             steps {
-                print "===== Nexus‚©‚çƒŠƒŠ[ƒX‘ÎÛƒ‚ƒWƒ…[ƒ‹‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚· ====="
+                print "===== Nexusã‹ã‚‰ãƒªãƒªãƒ¼ã‚¹å¯¾è±¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     env.URL = 'http://localhost:8081' +
@@ -128,13 +128,13 @@ pipeline {
                     bitsadmin /transfer "nexus" "%URL%" %TMP%%JAR%
                     '''
                 }
-                print "===== ƒŠƒŠ[ƒX‘ÎÛƒ‚ƒWƒ…[ƒ‹‚ğ³í‚Éƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒªãƒªãƒ¼ã‚¹å¯¾è±¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’æ­£å¸¸ã«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Deploy') {
             steps {
-                print "===== ƒfƒvƒƒC‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ‡ãƒ—ãƒ­ã‚¤ã‚’é–‹å§‹ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     def jar = 'jenkins-pipeline-sample-' + pom.version + '.jar'
@@ -149,7 +149,7 @@ pipeline {
                     :DoWhileExit
                     '''
                     echo "*********************"
-                    echo "ƒT[ƒrƒX‚ğ’â~‚µ‚Ü‚µ‚½B"
+                    echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’åœæ­¢ã—ã¾ã—ãŸã€‚"
                     echo "*********************"
                     bat "sc.exe query jenkins-pipeline-sample"
 
@@ -161,7 +161,7 @@ pipeline {
                     copy C:\\jenkins-pipeline-sample\\tmp\\%DATETIME%\\%JAR% jenkins-pipeline-sample.jar
                     '''
                     echo "*********************"
-                    echo "JARƒtƒ@ƒCƒ‹‚ğ·‚µ‘Ö‚¦‚Ü‚µ‚½B"
+                    echo "JARãƒ•ã‚¡ã‚¤ãƒ«ã‚’å·®ã—æ›¿ãˆã¾ã—ãŸã€‚"
                     echo "*********************"
 
                     bat '''
@@ -174,89 +174,25 @@ pipeline {
                     :DoWhileExit
                     '''
                     echo "*********************"
-                    echo "ƒT[ƒrƒX‚ğ‹N“®‚µ‚Ü‚µ‚½B"
+                    echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’èµ·å‹•ã—ã¾ã—ãŸã€‚"
                     echo "*********************"
                     bat "sc.exe query jenkins-pipeline-sample"
                 }
-                print "===== ƒfƒvƒƒC‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ‡ãƒ—ãƒ­ã‚¤ã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Clean'){
             steps {
+                print "===== ã‚³ãƒ³ãƒ—ãƒªãƒ¼ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
                 script {
-                    timeout(time: 5, unit: "MINUTES") {
-                        RELEASE_SCOPE = input message: 'rollback or complete ?', ok: 'Submit!', parameters: [
-                            choice(
-                                name: 'RELEASE_SCOPE',
-                                choices: 'rollback\ncomplete'
-                            )
-                        ]
-                    }
-
-                    switch(RELEASE_SCOPE) {
-                        case "rollback":
-                            print "===== ƒ[ƒ‹ƒoƒbƒN‚ğŠJn‚µ‚Ü‚· ====="
-                            bat '''
-                            sc.exe stop jenkins-pipeline-sample
-                            @echo off
-                            :DoWhile
-                              sc.exe query jenkins-pipeline-sample | findstr STATE | findstr STOPPED
-                              if %errorlevel% equ 0 goto DoWhileExit
-                            goto DoWhile
-                            :DoWhileExit
-                            '''
-                            echo "*********************"
-                            echo "ƒT[ƒrƒX‚ğ’â~‚µ‚Ü‚µ‚½B"
-                            echo "*********************"
-                            bat "sc.exe query jenkins-pipeline-sample"
-
-                            env.DATETIME = datetime
-                            bat '''
-                            cd C:\\jenkins-pipeline-sample
-                            del jenkins-pipeline-sample.jar
-                            @echo off
-                            :DoWhile
-                              if not exist jenkins-pipeline-sample.jar goto DoWhileExit
-                            goto DoWhile
-                            :DoWhileExit
-                            @echo on
-                            ren jenkins-pipeline-sample.jar.%DATETIME% jenkins-pipeline-sample.jar
-                            '''
-                            echo "*********************"
-                            echo "JARƒtƒ@ƒCƒ‹‚ğŒ³‚É–ß‚µ‚Ü‚µ‚½B"
-                            echo "*********************"
-
-                            bat '''
-                            sc.exe start jenkins-pipeline-sample
-                            @echo off
-                            :DoWhile
-                              sc.exe query jenkins-pipeline-sample | findstr STATE | findstr RUNNING
-                              if %errorlevel% equ 0 goto DoWhileExit
-                            goto DoWhile
-                            :DoWhileExit
-                            '''
-                            echo "*********************"
-                            echo "ƒT[ƒrƒX‚ğ‹N“®‚µ‚Ü‚µ‚½B"
-                            echo "*********************"
-                            bat "sc.exe query jenkins-pipeline-sample"
-
-                            print "===== ƒ[ƒ‹ƒoƒbƒN‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
-                        break
-
-                        case "complete":
-                            print "===== ƒRƒ“ƒvƒŠ[ƒg‚ğŠJn‚µ‚Ü‚· ====="
-
-                            env.DATETIME = datetime
-                            bat '''
-                            cd C:\\jenkins-pipeline-sample
-                            del jenkins-pipeline-sample.jar.%DATETIME%
-                            '''
-
-                            print "===== ƒRƒ“ƒvƒŠ[ƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
-                        break
-                    }
+                    env.DATETIME = datetime
+                    bat '''
+                    cd C:\\jenkins-pipeline-sample
+                    del jenkins-pipeline-sample.jar.%DATETIME%
+                    '''
                 }
+                print "===== ã‚³ãƒ³ãƒ—ãƒªãƒ¼ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
     }
