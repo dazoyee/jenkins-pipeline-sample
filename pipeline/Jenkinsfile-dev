@@ -77,7 +77,7 @@ pipeline {
             steps {
                 print "===== ビルドを開始します ====="
                 bat "./mvnw package -DskipTests=true"
-                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+                archiveArtifacts artifacts: 'target/*.jar,target/*.zip', followSymlinks: false
                 print "===== ビルドを正常に終了しました ====="
             }
         }
@@ -156,7 +156,7 @@ pipeline {
                     env.DATETIME = datetime
                     env.JAR = jar
                     bat '''
-                    cd C:\\jenkins-pipeline-sample\\bin
+                    cd C:\\jenkins-pipeline-sample
                     ren jenkins-pipeline-sample.jar jenkins-pipeline-sample.jar.%DATETIME%
                     copy C:\\jenkins-pipeline-sample\\tmp\\%DATETIME%\\%JAR% jenkins-pipeline-sample.jar
                     '''
@@ -185,12 +185,14 @@ pipeline {
         stage('Clean'){
             steps {
                 script {
-                    RELEASE_SCOPE = input message: 'rollback or complete ?', ok: 'Submit!', parameters: [
-                        choice(
-                            name: 'RELEASE_SCOPE',
-                            choices: 'rollback\ncomplete'
-                        )
-                    ]
+                    timeout(time: 5, unit: "MINUTES") {
+                        RELEASE_SCOPE = input message: 'rollback or complete ?', ok: 'Submit!', parameters: [
+                            choice(
+                                name: 'RELEASE_SCOPE',
+                                choices: 'rollback\ncomplete'
+                            )
+                        ]
+                    }
 
                     switch(RELEASE_SCOPE) {
                         case "rollback":
@@ -211,7 +213,7 @@ pipeline {
 
                             env.DATETIME = datetime
                             bat '''
-                            cd C:\\jenkins-pipeline-sample\\bin
+                            cd C:\\jenkins-pipeline-sample
                             del jenkins-pipeline-sample.jar
                             @echo off
                             :DoWhile
@@ -247,7 +249,7 @@ pipeline {
 
                             env.DATETIME = datetime
                             bat '''
-                            cd C:\\jenkins-pipeline-sample\\bin
+                            cd C:\\jenkins-pipeline-sample
                             del jenkins-pipeline-sample.jar.%DATETIME%
                             '''
 

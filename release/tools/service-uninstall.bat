@@ -1,14 +1,5 @@
 @echo off
 
-:::::
-
-:: 設定ファイルを読み込む
-for /f "usebackq tokens=1,* delims==" %%a in (""C:\jenkins-pipeline-sample\bin\env"") do (
-    set %%a=%%b
-)
-
-:::::
-
 :input
 set INPUT=
 set /P INPUT="サービス削除処理を開始しますか？(n/Y):
@@ -21,5 +12,5 @@ if not %INPUT% == Y (
 )
 
 :: サービス登録
-rem sc.exe delete %APP_NAME%
-nssm remove %APP_NAME%
+rem sc.exe delete jenkins-pipeline-sample
+nssm remove jenkins-pipeline-sample
