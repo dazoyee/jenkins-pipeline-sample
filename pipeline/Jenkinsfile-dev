@@ -185,13 +185,13 @@ pipeline {
         stage('Clean'){
             steps {
                 print "===== コンプリートを開始します ====="
-
-                env.DATETIME = datetime
-                bat '''
-                cd C:\\jenkins-pipeline-sample
-                del jenkins-pipeline-sample.jar.%DATETIME%
-                '''
-
+                script {
+                    env.DATETIME = datetime
+                    bat '''
+                    cd C:\\jenkins-pipeline-sample
+                    del jenkins-pipeline-sample.jar.%DATETIME%
+                    '''
+                }
                 print "===== コンプリートを正常に終了しました ====="
             }
         }
