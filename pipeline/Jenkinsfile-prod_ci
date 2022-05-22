@@ -1,5 +1,3 @@
-def datetime = new Date().format('yyyyMMddHHmmss')
-
 pipeline {
     agent any
 
@@ -19,8 +17,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 print "===== チェックアウトを開始します ====="
-                // git url: 'https://github.com/ioridazo/jenkins-pipeline-sample.git', branch: 'develop'
-                checkout scm
+                git url: 'https://github.com/ioridazo/jenkins-pipeline-sample.git', branch: 'main'
+                // checkout scm
                 print "===== チェックアウトを正常に終了しました ====="
             }
         }
@@ -92,7 +90,7 @@ pipeline {
                         credentialsId: 'nexus3',
                         protocol: 'http',
                         nexusUrl: 'localhost:8081',
-                        repository: 'maven-snapshots',
+                        repository: 'maven-releases',
                         groupId: pom.groupId,
                         version: pom.version,
                         artifacts: [
@@ -105,94 +103,6 @@ pipeline {
                     )
                 }
                 print "===== ビルド成果物を正常にアップロードしました ====="
-            }
-        }
-
-        stage('Download') {
-            steps {
-                print "===== Nexusからリリース対象モジュールをダウンロードします ====="
-                script {
-                    def pom = readMavenPom file: 'pom.xml'
-                    env.URL = 'http://localhost:8081' +
-                            '/service/rest/v1/search/assets/download' +
-                            '?sort=version' +
-                            '&repository=maven-snapshots' +
-                            '&maven.groupId=' + pom.groupId +
-                            '&maven.artifactId=' + pom.artifactId +
-                            '&maven.baseVersion=' + pom.version
-                            '&maven.extension=jar'
-                    env.TMP = 'C:\\jenkins-pipeline-sample\\tmp\\' + datetime + '\\'
-                    env.JAR = 'jenkins-pipeline-sample-' + pom.version + '.jar'
-                    bat '''
-                    mkdir %TMP%
-                    bitsadmin /transfer "nexus" "%URL%" %TMP%%JAR%
-                    '''
-                }
-                print "===== リリース対象モジュールを正常にダウンロードしました ====="
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                print "===== デプロイを開始します ====="
-                script {
-                    def pom = readMavenPom file: 'pom.xml'
-                    def jar = 'jenkins-pipeline-sample-' + pom.version + '.jar'
-
-                    bat '''
-                    sc.exe stop jenkins-pipeline-sample
-                    @echo off
-                    :DoWhile
-                      sc.exe query jenkins-pipeline-sample | findstr STATE | findstr STOPPED
-                      if %errorlevel% equ 0 goto DoWhileExit
-                    goto DoWhile
-                    :DoWhileExit
-                    '''
-                    echo "*********************"
-                    echo "サービスを停止しました。"
-                    echo "*********************"
-                    bat "sc.exe query jenkins-pipeline-sample"
-
-                    env.DATETIME = datetime
-                    env.JAR = jar
-                    bat '''
-                    cd C:\\jenkins-pipeline-sample
-                    ren jenkins-pipeline-sample.jar jenkins-pipeline-sample.jar.%DATETIME%
-                    copy C:\\jenkins-pipeline-sample\\tmp\\%DATETIME%\\%JAR% jenkins-pipeline-sample.jar
-                    '''
-                    echo "*********************"
-                    echo "JARファイルを差し替えました。"
-                    echo "*********************"
-
-                    bat '''
-                    sc.exe start jenkins-pipeline-sample
-                    @echo off
-                    :DoWhile
-                      sc.exe query jenkins-pipeline-sample | findstr STATE | findstr RUNNING
-                      if %errorlevel% equ 0 goto DoWhileExit
-                    goto DoWhile
-                    :DoWhileExit
-                    '''
-                    echo "*********************"
-                    echo "サービスを起動しました。"
-                    echo "*********************"
-                    bat "sc.exe query jenkins-pipeline-sample"
-                }
-                print "===== デプロイを正常に終了しました ====="
-            }
-        }
-
-        stage('Clean'){
-            steps {
-                print "===== コンプリートを開始します ====="
-
-                env.DATETIME = datetime
-                bat '''
-                cd C:\\jenkins-pipeline-sample
-                del jenkins-pipeline-sample.jar.%DATETIME%
-                '''
-
-                print "===== コンプリートを正常に終了しました ====="
             }
         }
     }
