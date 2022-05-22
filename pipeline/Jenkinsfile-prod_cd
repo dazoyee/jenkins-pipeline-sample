@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Download') {
             steps {
-                print "===== Nexus‚©‚çƒŠƒŠ[ƒX‘ÎÛƒ‚ƒWƒ…[ƒ‹‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚· ====="
+                print "===== Nexusã‹ã‚‰ãƒªãƒªãƒ¼ã‚¹å¯¾è±¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     env.URL = 'http://localhost:8081' +
@@ -24,13 +24,13 @@ pipeline {
                     bitsadmin /transfer "nexus" "%URL%" %TMP%%JAR%
                     '''
                 }
-                print "===== ƒŠƒŠ[ƒX‘ÎÛƒ‚ƒWƒ…[ƒ‹‚ğ³í‚Éƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒªãƒªãƒ¼ã‚¹å¯¾è±¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’æ­£å¸¸ã«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Deploy') {
             steps {
-                print "===== ƒfƒvƒƒC‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ‡ãƒ—ãƒ­ã‚¤ã‚’é–‹å§‹ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     def jar = 'jenkins-pipeline-sample-' + pom.version + '.jar'
@@ -45,7 +45,7 @@ pipeline {
                     :DoWhileExit
                     '''
                     echo "*********************"
-                    echo "ƒT[ƒrƒX‚ğ’â~‚µ‚Ü‚µ‚½B"
+                    echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’åœæ­¢ã—ã¾ã—ãŸã€‚"
                     echo "*********************"
                     bat "sc.exe query jenkins-pipeline-sample"
 
@@ -57,7 +57,7 @@ pipeline {
                     copy C:\\jenkins-pipeline-sample\\tmp\\%DATETIME%\\%JAR% jenkins-pipeline-sample.jar
                     '''
                     echo "*********************"
-                    echo "JARƒtƒ@ƒCƒ‹‚ğ·‚µ‘Ö‚¦‚Ü‚µ‚½B"
+                    echo "JARãƒ•ã‚¡ã‚¤ãƒ«ã‚’å·®ã—æ›¿ãˆã¾ã—ãŸã€‚"
                     echo "*********************"
 
                     bat '''
@@ -70,11 +70,11 @@ pipeline {
                     :DoWhileExit
                     '''
                     echo "*********************"
-                    echo "ƒT[ƒrƒX‚ğ‹N“®‚µ‚Ü‚µ‚½B"
+                    echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’èµ·å‹•ã—ã¾ã—ãŸã€‚"
                     echo "*********************"
                     bat "sc.exe query jenkins-pipeline-sample"
                 }
-                print "===== ƒfƒvƒƒC‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ‡ãƒ—ãƒ­ã‚¤ã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
@@ -92,7 +92,7 @@ pipeline {
 
                     switch(RELEASE_SCOPE) {
                         case "rollback":
-                            print "===== ƒ[ƒ‹ƒoƒbƒN‚ğŠJn‚µ‚Ü‚· ====="
+                            print "===== ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’é–‹å§‹ã—ã¾ã™ ====="
                             bat '''
                             sc.exe stop jenkins-pipeline-sample
                             @echo off
@@ -103,7 +103,7 @@ pipeline {
                             :DoWhileExit
                             '''
                             echo "*********************"
-                            echo "ƒT[ƒrƒX‚ğ’â~‚µ‚Ü‚µ‚½B"
+                            echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’åœæ­¢ã—ã¾ã—ãŸã€‚"
                             echo "*********************"
                             bat "sc.exe query jenkins-pipeline-sample"
 
@@ -120,7 +120,7 @@ pipeline {
                             ren jenkins-pipeline-sample.jar.%DATETIME% jenkins-pipeline-sample.jar
                             '''
                             echo "*********************"
-                            echo "JARƒtƒ@ƒCƒ‹‚ğŒ³‚É–ß‚µ‚Ü‚µ‚½B"
+                            echo "JARãƒ•ã‚¡ã‚¤ãƒ«ã‚’å…ƒã«æˆ»ã—ã¾ã—ãŸã€‚"
                             echo "*********************"
 
                             bat '''
@@ -133,15 +133,15 @@ pipeline {
                             :DoWhileExit
                             '''
                             echo "*********************"
-                            echo "ƒT[ƒrƒX‚ğ‹N“®‚µ‚Ü‚µ‚½B"
+                            echo "ã‚µãƒ¼ãƒ“ã‚¹ã‚’èµ·å‹•ã—ã¾ã—ãŸã€‚"
                             echo "*********************"
                             bat "sc.exe query jenkins-pipeline-sample"
 
-                            print "===== ƒ[ƒ‹ƒoƒbƒN‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                            print "===== ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
                         break
 
                         case "complete":
-                            print "===== ƒRƒ“ƒvƒŠ[ƒg‚ğŠJn‚µ‚Ü‚· ====="
+                            print "===== ã‚³ãƒ³ãƒ—ãƒªãƒ¼ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
 
                             env.DATETIME = datetime
                             bat '''
@@ -149,7 +149,7 @@ pipeline {
                             del jenkins-pipeline-sample.jar.%DATETIME%
                             '''
 
-                            print "===== ƒRƒ“ƒvƒŠ[ƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                            print "===== ã‚³ãƒ³ãƒ—ãƒªãƒ¼ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
                         break
                     }
                 }

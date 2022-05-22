@@ -16,19 +16,19 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                print "===== ƒ`ƒFƒbƒNƒAƒEƒg‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
                 git url: 'https://github.com/ioridazo/jenkins-pipeline-sample.git', branch: 'main'
                 // checkout scm
-                print "===== ƒ`ƒFƒbƒNƒAƒEƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒã‚§ãƒƒã‚¯ã‚¢ã‚¦ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Test') {
             steps {
-                print "===== ƒeƒXƒg‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ†ã‚¹ãƒˆã‚’é–‹å§‹ã—ã¾ã™ ====="
                 bat "./mvnw clean clover:setup"
                 bat "./mvnw test surefire-report:report pmd:pmd pmd:cpd jacoco:report spotbugs:spotbugs clover:aggregate clover:clover"
-                print "===== ƒeƒXƒg‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ†ã‚¹ãƒˆã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
@@ -73,16 +73,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                print "===== ƒrƒ‹ƒh‚ğŠJn‚µ‚Ü‚· ====="
+                print "===== ãƒ“ãƒ«ãƒ‰ã‚’é–‹å§‹ã—ã¾ã™ ====="
                 bat "./mvnw package -DskipTests=true"
                 archiveArtifacts artifacts: 'target/*.jar,target/*.zip', followSymlinks: false
-                print "===== ƒrƒ‹ƒh‚ğ³í‚ÉI—¹‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ“ãƒ«ãƒ‰ã‚’æ­£å¸¸ã«çµ‚äº†ã—ã¾ã—ãŸ ====="
             }
         }
 
         stage('Upload') {
             steps {
-                print "===== ƒrƒ‹ƒh¬‰Ê•¨‚ğNexus‚ÉƒAƒbƒvƒ[ƒh‚µ‚Ü‚· ====="
+                print "===== ãƒ“ãƒ«ãƒ‰æˆæœç‰©ã‚’Nexusã«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ ====="
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     nexusArtifactUploader (
@@ -102,7 +102,7 @@ pipeline {
                         ]
                     )
                 }
-                print "===== ƒrƒ‹ƒh¬‰Ê•¨‚ğ³í‚ÉƒAƒbƒvƒ[ƒh‚µ‚Ü‚µ‚½ ====="
+                print "===== ãƒ“ãƒ«ãƒ‰æˆæœç‰©ã‚’æ­£å¸¸ã«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸ ====="
             }
         }
     }
