@@ -156,4 +156,28 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            slackSend(
+                baseUrl: 'https://pj-share-knowledges.slack.com/services/hooks/jenkins/',
+                channel: 'UKNK4SZPX',
+                color: 'good',
+                message: "${env.JOB_NAME} - ${env.BUILD_NUMBER} SUCCESS\n${env.BUILD_URL}",
+                notifyCommitters: true,
+                token: 'xoxb-668097226820-3480272606022-oeqHEqh77FKgjWNiSpPBfJ0u'
+            )
+        }
+
+        failure {
+            slackSend(
+                baseUrl: 'https://pj-share-knowledges.slack.com/services/hooks/jenkins/',
+                channel: 'UKNK4SZPX',
+                color: 'danger',
+                message: "${env.JOB_NAME} - ${env.BUILD_NUMBER} FAILED\n${env.BUILD_URL}",
+                notifyCommitters: true,
+                token: 'xoxb-668097226820-3480272606022-oeqHEqh77FKgjWNiSpPBfJ0u'
+            )
+        }
+    }
 }
