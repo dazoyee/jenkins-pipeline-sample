@@ -205,7 +205,7 @@ pipeline {
                 color: 'good',
                 message: "${env.JOB_NAME} - ${env.BUILD_NUMBER} SUCCESS\n${env.BUILD_URL}",
                 notifyCommitters: true,
-                token: 'xoxb-668097226820-3480272606022-oeqHEqh77FKgjWNiSpPBfJ0u'
+                tokenCredentialId: 'Slack Jenkins Bot'
             )
         }
 
@@ -216,7 +216,7 @@ pipeline {
                 color: 'danger',
                 message: "${env.JOB_NAME} - ${env.BUILD_NUMBER} FAILED\n${env.BUILD_URL}",
                 notifyCommitters: true,
-                token: 'xoxb-668097226820-3480272606022-oeqHEqh77FKgjWNiSpPBfJ0u'
+                tokenCredentialId: 'Slack Jenkins Bot'
             )
         }
     }
